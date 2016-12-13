@@ -39,6 +39,7 @@ public class PropertyPlaceholderTest extends PropertyPlaceholder {
         bind("prop3","10");
         bind("prop4","20");
         bind("prop5","nested");
+        bind("prop6","prop1");
         bind("prop-nested","hello nested world!");
         bind("prop-recursive-1","${prop-recursive-2}");
         bind("prop-recursive-2","${prop-recursive-3}");
@@ -92,6 +93,22 @@ public class PropertyPlaceholderTest extends PropertyPlaceholder {
     public void plainText() {
         sut = makeProperty("plain text");
         assertEquals("plain text", sut.getStringValue());
+    }
+
+    @Test
+    public void customPrefixSuffix() {
+        setPlaceholderPrefix("$");
+        setPlaceholderSuffix("$");
+        sut = makeProperty("$$prop1$$");
+        assertEquals("$$prop1$$", sut.getStringValue());
+    }
+
+    @Test
+    public void customPrefixSuffix2() {
+        setPlaceholderPrefix("$");
+        setPlaceholderSuffix("$");
+        sut = makeProperty("$$prop6$$");
+        assertEquals("hello", sut.getStringValue());
     }
     
 //    @Test
